@@ -1,3 +1,22 @@
+--- exiv2-0.23/config/Makefile.in	2012-03-22 16:19:35.000000000 +0100
++++ exiv2-0.23/config/b/Makefile.in.new	2013-10-27 08:26:20.640574335 +0100
+@@ -56,9 +56,13 @@
+         mostlyclean clean distclean maintainer-clean \
+         install uninstall
+ 
+-all install: config/config.mk xmpsdk
+-	cd src && $(MAKE) $(MAKECMDGOALS)
+-	cd po && $(MAKE) $(MAKECMDGOALS)
++all: config/config.mk xmpsdk
++	cd src && $(MAKE) lib
++	cd po && $(MAKE) all
++
++install: config/config.mk xmpsdk
++	cd src && $(MAKE) install-lib
++	cd po && $(MAKE) install
+ 
+ uninstall: config/config.mk
+ 	cd src && $(MAKE) $(MAKECMDGOALS)
 diff -Naur exiv2-0.23/config/config.sub exiv2-0.23/config/b/config.sub
 --- exiv2-0.23/config/config.sub	2011-01-14 03:12:14.000000000 +0100
 +++ exiv2-0.23/config/b/config.sub	2012-10-11 11:33:57.941768644 +0200

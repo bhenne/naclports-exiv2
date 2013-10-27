@@ -1,9 +1,11 @@
+#!/bin/bash
+# Copyright (c) 2011 The Native Client Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+# 
+# This file was modified by Maximilian Koch and Benjamin Henne
 
-
-readonly URL=http://www.exiv2.org/exiv2-0.23.tar.gz
-readonly PATCH_FILE=nacl-exiv2-0.23.patch
-readonly PACKAGE_NAME=exiv2-0.23
-
+source pkg_info
 source ../../build_tools/common.sh
 
 export LIBS=-lnosys
@@ -16,9 +18,9 @@ CustomConfigureStep() {
   export CXX=${NACLCXX}" "-lpthread
   export AR=${NACLAR}
   export RANLIB=${NACLRANLIB}
-  export PKG_CONFIG_PATH=${NACL_SDK_USR_LIB}/pkgconfig
-  export PKG_CONFIG_LIBDIR=${NACL_SDK_USR_LIB}
-  export FREETYPE_CONFIG=${NACL_SDK_USR_BIN}/freetype-config
+  export PKG_CONFIG_PATH=${NACLPORTS_LIBDIR}/pkgconfig
+  export PKG_CONFIG_LIBDIR=${NACLPORTS_LIBDIR}
+  export FREETYPE_CONFIG=${NACLPORTS_LIBDIR}/freetype-config
   export PATH=${NACL_BIN_PATH}:${PATH};
   ChangeDir ${NACL_PACKAGES_REPOSITORY}/${PACKAGE_NAME}
   #Remove ${PACKAGE_NAME}-build
@@ -27,7 +29,7 @@ CustomConfigureStep() {
   echo "Directory: $(pwd)"
 
   local conf_host=${NACL_CROSS_PREFIX}
-  if [[ ${NACL_PACKAGES_BITSIZE} == "pnacl" ]]; then
+  if [[ ${NACL_ARCH} == "pnacl" ]]; then
     # The PNaCl tools use "pnacl-" as the prefix, but config.sub
     # does not know about "pnacl".  It only knows about "le32-nacl".
     # Unfortunately, most of the config.subs here are so old that
@@ -37,10 +39,10 @@ CustomConfigureStep() {
   ./configure \
     --host=${conf_host} \
     --disable-shared \
-    --prefix=${NACL_SDK_USR} \
-    --exec-prefix=${NACL_SDK_USR} \
-    --libdir=${NACL_SDK_USR_LIB} \
-    --oldincludedir=${NACL_SDK_USR_INCLUDE} \
+    --prefix=${NACLPORTS_PREFIX} \
+    --exec-prefix=${NACLPORTS_PREFIX} \
+    --libdir=${NACLPORTS_LIBDIR} \
+    --oldincludedir=${NACLPORTS_INCLUDE} \
     --with-http=off \
     --with-html=off \
     --with-ftp=off \
@@ -62,7 +64,7 @@ CustomPackageInstall() {
   #DefaultConfigureStep
   DefaultBuildStep
   DefaultInstallStep
-  DefaultCleanUpStep
+  #DefaultCleanUpStep
 }
 
 

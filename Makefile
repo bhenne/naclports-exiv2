@@ -84,6 +84,7 @@ LIBRARIES = \
      libraries/curl \
      libraries/DevIL \
      libraries/dreadthread \
+     libraries/exiv2 \
      libraries/expat \
      libraries/faac \
      libraries/faad2 \
@@ -239,6 +240,7 @@ endif
 endif
 
 # packages with dependencies
+$(SENT)/libraries/exiv2: libraries/zlib libraries/expat libraries/jsoncpp
 $(SENT)/libraries/libvorbis: libraries/libogg
 $(SENT)/libraries/libtheora: libraries/libogg
 $(SENT)/libraries/flac: libraries/libogg
@@ -320,6 +322,7 @@ cairo: libraries/cairo ;
 curl: libraries/curl ;
 cfitsio: libraries/cfitsio ;
 DevIL: libraries/DevIL ;
+exiv2: libraries/exiv2 ;
 expat: libraries/expat ;
 faac: libraries/faac ;
 faad: libraries/faad2 ;
