@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 # 
-# This file was modified by Maximilian Koch and Benjamin Henne
+# The original file was modified by Maximilian Koch and Benjamin Henne
 
 source pkg_info
 source ../../build_tools/common.sh
