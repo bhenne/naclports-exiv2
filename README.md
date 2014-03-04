@@ -31,10 +31,8 @@ Requirements provided by naclports:
 * jsoncpp
 * zlib
 
-How to build
-* copy libraries/exiv2 to your copy of naclports
-* copy Makefile also or add all three lines containing
-  exiv2 to the lastest Makefile in your copy of naclports
+How to build (pepper33)
+* recursively copy ports/exiv2 to your copy of naclports (src/ports)
 * build via *make exiv2* or *./make-all.sh exiv2*
     * this will build dependencies also
 

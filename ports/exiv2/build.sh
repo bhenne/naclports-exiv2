@@ -5,11 +5,6 @@
 # 
 # The original file was modified by Maximilian Koch and Benjamin Henne
 
-source pkg_info
-source ../../build_tools/common.sh
-
-export LIBS=-lnosys
-
 CustomConfigureStep() {
   local EXTRA_CONFIGURE_OPTS=("${@:-}")
   Banner "Configuring ${PACKAGE_NAME}"
@@ -43,17 +38,28 @@ CustomConfigureStep() {
     --exec-prefix=${NACLPORTS_PREFIX} \
     --libdir=${NACLPORTS_LIBDIR} \
     --oldincludedir=${NACLPORTS_INCLUDE} \
-    --with-http=off \
-    --with-html=off \
-    --with-ftp=off \
     --${NACL_OPTION}-mmx \
     --${NACL_OPTION}-sse \
     --${NACL_OPTION}-sse2 \
     --${NACL_OPTION}-asm \
-    --with-x=no  \
     "${EXTRA_CONFIGURE_OPTS[@]}"
 }
 
+CustomBuildStep() {
+ BUILD_DIR=${SRC_DIR}
+ # 
+ ChangeDir ${BUILD_DIR}
+ # Build ${MAKE_TARGETS} or default target if it is not defined
+ if [ -n "${MAKEFLAGS:-}" ]; then
+   echo "MAKEFLAGS=${MAKEFLAGS}"
+   export MAKEFLAGS
+ fi
+ if [ "${VERBOSE:-}" = "1" ]; then
+   MAKE_TARGETS+=" VERBOSE=1 V=1"
+ fi
+ export PATH=${NACL_BIN_PATH}:${PATH}
+ LogExecute make -j${OS_JOBS} ${MAKE_TARGETS:-}
+}
 
 CustomPackageInstall() {
   DefaultPreInstallStep
@@ -62,7 +68,8 @@ CustomPackageInstall() {
   DefaultPatchStep
   CustomConfigureStep
   #DefaultConfigureStep
-  DefaultBuildStep
+  #DefaultBuildStep
+  CustomBuildStep
   DefaultInstallStep
   #DefaultCleanUpStep
 }

@@ -1,3 +1,5 @@
 PACKAGE_NAME=exiv2-0.23
 URL=http://www.exiv2.org/exiv2-0.23.tar.gz
 LICENSE=CUSTOM:README
+SHA1=5f342bf642477526f41add11d6ee7787cdcd639f
+DEPENDS=(zlib expat jsoncpp)
