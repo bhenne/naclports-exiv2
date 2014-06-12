@@ -40,6 +40,7 @@ We originally created this port to include Exiv2 in a
 Chrome extension, and by this allow the support of all
 metadata standards mentioned before, while other 
 Javascript-based solutions lack of such support.
+ https://github.com/bhenne/ChromeExtension-PhotoMetadataPrivacy/
 
 The port was done in the context of privacy research
 at the *Distributed Computing & Security Group* 
